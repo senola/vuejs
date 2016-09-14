@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>初识vuejs</title>
+	<meta charset="utf-8">
+	<link rel="stylesheet" type="text/css" href="http://cdn.twindy.org/common/common.css">
+	<script src="http://cdn.bootcss.com/vue/1.0.26/vue.js" type="text/javascript" charset="utf-8"></script>
+	<style type="text/css">
+		p, input, button{margin-top: 5px;}
+		h3, h4{margin-top: 15px;}
+		.container{margin: 5px 20px;}
+	</style>
+</head>
+<body>
+<div class="container">
+	<h3>vue.js简介：</h3>
+	<p>1、简洁、数据驱动、组件化、轻量、快速、模块友好</p>
+	<p>2、不支持 IE8 及其以下版本。因为 Vue.js 使用了 IE8 不能实现的 ECMAScript 5 特性。 Vue.js 支持所有兼容 ECMAScript 5 的浏览器。</p>
+
+	<h4>#双向绑定</h4>
+	<div id="app1">
+	  <p>{{ message }}</p>
+	  <input v-model="message">
+	</div>
+
+	<h4>#渲染列表</h4>
+	<div id="app2">
+	  <ul>
+	    <li v-for="todo in todos">
+	      {{ todo.text }}: {{ todo.desc }}
+	    </li>
+	  </ul>
+	</div>
+
+	<h4>#.处理用户输入</h4>
+	<div id="app3">
+	  <p>{{ message }}</p>
+	  <button v-on:click="reverseMessage">Reverse Message</button>
+	</div>
+
+	<h4>#.综合</h4>
+	<div id="app4">
+	  <input v-model="newTodo" v-on:keyup.enter="addTodo">
+	  <ul>
+	    <li v-for="todo in todos">
+	      <span>{{ todo.text }}</span>
+	      <button v-on:click="removeTodo($index)">X</button>
+	    </li>
+	  </ul>
+	</div>
+
+	<h4>#.未理解问题</h4>
+	<p>1、vue的作用域如何限定？</p>
+	<p>2、一个页面是否需要new 多个vue实例？</p>
+	<p>3、new vue()时候接受的参数？</p>
+	<p>4、双向绑定的原理？</p>
+</div>
+</body>
+<script  type="text/javascript">
+	new Vue({
+	  el: '#app1',
+	  data: {
+	    message: 'Hello world'
+	  }
+	});
+	new Vue({
+	  el: '#app2',
+	  data: {
+	    todos: [
+	      { text: 'jquery', desc: 'a javascript lib'},
+	      { text: 'angular', desc: 'a javascript framework' },
+	      { text: 'webpack', desc: 'a javascript bundler'}
+	    ]
+	  }
+	});
+	new Vue({
+		el: '#app3',
+		data: {
+			message: 'hello world'
+		},
+		methods: {
+			reverseMessage: function() {
+				this.message = this.message.split('').reverse().join('');
+			}
+		}
+	});
+	new Vue({
+	  el: '#app4',
+	  data: {
+	    newTodo: '',
+	    todos: [{ text: 'Add some todos' }]
+	  },
+	  methods: {
+	    addTodo: function () {
+	      var text = this.newTodo.trim();
+	      if (text) {
+	        this.todos.push({ text: text })
+	        this.newTodo = ''
+	      }
+	    },
+	    removeTodo: function (index) {
+	      this.todos.splice(index, 1)
+	    }
+	  }
+	});
+</script>
+</html>
